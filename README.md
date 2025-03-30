@@ -76,6 +76,10 @@ bin/kafka-share-groups.sh --bootstrap-server localhost:9092 --describe --group c
 
 ## KafkaShareConsumer example
 
+You can check basic examples on following references:
+- https://docs.confluent.io/platform/current/clients/javadocs/javadoc/org/apache/kafka/clients/consumer/KafkaShareConsumer.html
+- https://www.morling.dev/blog/kip-932-queues-for-kafka/
+
 Execute:
 
 ```shell
