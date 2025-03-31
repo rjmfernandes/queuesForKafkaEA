@@ -32,7 +32,7 @@ Open http://localhost:9021 and check cluster is healthy.
 
 We will be following the tests described here: https://cwiki.apache.org/confluence/display/KAFKA/Queues+for+Kafka+%28KIP-932%29+-+Early+Access+Release+Notes
 
-Run for 4 separate shells:
+Run for 6 separate shells:
 
 ```shell
 docker compose exec -it broker bash
@@ -53,7 +53,7 @@ bin/kafka-console-producer.sh --bootstrap-server localhost:9092 --topic quicksta
 
 You will be able to start producing in this shell.
 
-In the other 2 terminals execute:
+In the other 4 terminals execute:
 
 ```shell
 bin/kafka-console-share-consumer.sh --bootstrap-server localhost:9092 --topic quickstart-events
@@ -66,13 +66,7 @@ bin/kafka-share-groups.sh --bootstrap-server localhost:9092 --list
 bin/kafka-share-groups.sh --bootstrap-server localhost:9092 --describe --group console-share-consumer --state
  ```
 
- For some reason the events are not being printed out on the console consumers.
-
- Consume as usual with to see events being consumed:
-
- ```shell
- bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic quickstart-events --from-beginning
- ```
+One is running 4 share consumers from a topic with 3 partitions.
 
 ## KafkaShareConsumer example
 
@@ -80,13 +74,20 @@ You can check basic examples on following references:
 - https://docs.confluent.io/platform/current/clients/javadocs/javadoc/org/apache/kafka/clients/consumer/KafkaShareConsumer.html
 - https://www.morling.dev/blog/kip-932-queues-for-kafka/
 
-Execute:
+Execute 4 instances in parallel:
 
 ```shell
 mvn exec:java -Dexec.mainClass="io.confluent.csta.KafkaShareConsumerApp"
 ```
 
-Again for some reason nothing is consumed. 
+Now you should see again as before the messages being consumed by more instances than the number of partitions.
+
+You can also double check:
+
+```shell
+bin/kafka-share-groups.sh --bootstrap-server localhost:9092 --list
+bin/kafka-share-groups.sh --bootstrap-server localhost:9092 --describe --group shared-consumer-group --state
+ ```
 
 ## Cleanup
 

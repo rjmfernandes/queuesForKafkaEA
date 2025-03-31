@@ -24,7 +24,7 @@ public class KafkaShareConsumerApp {
                 ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(10000));
                 System.out.println("Polled records after 10s: " + records.count());
                 for (ConsumerRecord<String, String> record : records) {
-                    System.out.printf("Consumed message: value=%s",record.value());
+                    System.out.printf("Consumed message: value=%s\n",record.value());
                 }
             }
         }
